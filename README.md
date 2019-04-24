@@ -4,8 +4,8 @@
 This repository provides a generator for dither masks with blue-noise power spectrums. 
 The generated masks are tileable and can have arbitrary resolutions. 
 The generator runs on the GPU and recquires an OpenGL4.5 compatible card.
-Below is an example of a 512x512 dither mask generated with the repo:
-![alt text](examples/mask_512_512.png "Mask")
+Below is an example of a 256x256 dither mask generated with the repo:
+![alt text](examples/mask_256_256.png "Mask")
 
 A set of precomputed masks can be downloaded from the examples/ repository.
 
