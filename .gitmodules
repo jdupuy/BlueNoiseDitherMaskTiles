@@ -1,0 +1,9 @@
+[submodule "submodules/glfw"]
+	path = submodules/glfw
+	url = https://github.com/glfw/glfw
+[submodule "submodules/dj_opengl"]
+	path = submodules/dj_opengl
+	url = https://github.com/jdupuy/dj_opengl.git
+[submodule "submodules/stb"]
+	path = submodules/stb
+	url = https://github.com/nothings/stb.git
