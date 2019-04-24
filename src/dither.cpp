@@ -279,10 +279,12 @@ void computeDitherOnce(int w, int h, int w2, int h2, float value)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-void render(int w, int h)
+void render(int w, int h, float value)
 {
     glViewport(0, 0, WINDOW_SIZE, WINDOW_SIZE * h / w);
     glUseProgram(g_gl.programs[PROGRAM_RENDER]);
+    glUniform1f(glGetUniformLocation(g_gl.programs[PROGRAM_RENDER], "u_Offset"),
+                1.0f - value);
     glBindVertexArray(g_gl.vertexArray);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     glBindVertexArray(0);
@@ -368,39 +370,38 @@ int main(int argc, char **argv)
 
     int i = 0;
     int cnt = args.res.x * args.res.y;
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window) && i < cnt) {
+        float val = i / float(cnt);
 
         glfwPollEvents();
 
-        if (i < cnt) {
-            float val = i / float(cnt);
+
 #if 0 // invert halfway through (this is not mandatory)
-            if (i >= cnt / 2) {
+        if (i >= cnt / 2) {
 
-                if (i == cnt / 2) {
-                    glBindFramebuffer(GL_FRAMEBUFFER, g_gl.framebuffer);
-                    glClearColor(0.0, 0.0, 0.0, 0.0);
-                    glClear(GL_COLOR_BUFFER_BIT);
-                    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-                    findMin(args.res2.x, args.res2.y);
-                }
-
-                val = 1.0f - (i - cnt / 2) / float(cnt);
+            if (i == cnt / 2) {
+                glBindFramebuffer(GL_FRAMEBUFFER, g_gl.framebuffer);
+                glClearColor(0.0, 0.0, 0.0, 0.0);
+                glClear(GL_COLOR_BUFFER_BIT);
+                glBindFramebuffer(GL_FRAMEBUFFER, 0);
+                findMin(args.res2.x, args.res2.y);
             }
+
+            val = 1.0f - (i - cnt / 2) / float(cnt);
+        }
 #endif
-            computeDitherOnce(args.res.x,
-                              args.res.y,
-                              args.res2.x,
-                              args.res2.y,
-                              val);
-            ++i;
-        } else break;
+        computeDitherOnce(args.res.x,
+                          args.res.y,
+                          args.res2.x,
+                          args.res2.y,
+                          val);
+        ++i;
 
         // print progress
         if (i % args.res.x == 0)
             LOG("Progress: %.2f / 100\n", 100.f * (i / float(cnt)));
 
-        render(args.res2.x, args.res2.y);
+        render(args.res2.x, args.res2.y, val);
         glfwSwapBuffers(window);
     }
 

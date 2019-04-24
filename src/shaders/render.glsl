@@ -1,4 +1,5 @@
 
+uniform float u_Offset;
 uniform sampler2D u_DitherSampler;
 
 #ifdef VERTEX_SHADER
@@ -17,6 +18,9 @@ layout(location = 0) out vec4 o_FragColor;
 
 void main(void)
 {
-    o_FragColor = texture(u_DitherSampler, i_TexCoord).rrrr;
+    float t = texture(u_DitherSampler, i_TexCoord).r;
+    vec3 rgb = t > 0.0 ? vec3(t + u_Offset): vec3(0);
+
+    o_FragColor = vec4(rgb, 1);
 }
 #endif
