@@ -1,5 +1,7 @@
 # Blue-Noise Dither Mask Tiles Generator
 
+[![Build Status](https://travis-ci.org/jdupuy/BlueNoiseDitherMaskTiles.svg?branch=master)](https://travis-ci.org/jdupuy/BlueNoiseDitherMaskTiles) [![Build status](https://ci.appveyor.com/api/projects/status/x65qoyhppsmpkxs1?svg=true)](https://ci.appveyor.com/project/jdupuy/bluenoisedithermasktiles)
+
 ### Details
 This repository provides a generator for dither masks with blue-noise power spectrums. 
 The generated masks are tileable and can have arbitrary resolutions. 
